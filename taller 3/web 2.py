@@ -23,18 +23,10 @@ print(href1)
 
 
 resultado = list(set(filter(lambda x: x is not None, href1)))
-
 urls_filtradas = [url for url in resultado if '/inmueble' in url]
-
 ultimos_segmentos = [url.rsplit('/', 1)[-1] for url in urls_filtradas]
 
 "MC5297645" in ultimos_segmentos
 
 
-flecha = driver.find_element(By.CLASS_NAME, 'Icon-sc-1mikm6x-0 jvsOeO')
-flecha.click() 
 
-element = driver.find_element(By.XPATH, "//div[@class='Icon-sc-1mikm6x-0 jvsOeO']")
-
-wait = WebDriverWait(driver, 10)
-element = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".Icon-sc-1mikm6x-0.jvsOeO")))
