@@ -62,6 +62,62 @@ contenido = prueba[0].contents[0]
 
 datos_apto = json.loads(contenido)
 
+
+datos_apto['props']
+
 datos_apto.keys()
 
 url_apto
+
+caracteristicas = datos_apto['props']
+
+
+
+
+"""
+props >  initialProps > pageProps > realEstate ;area, areac, areaUp,areaFrom,areaprivada, bathrooms, buildtime, city, comment,
+commonNeighborhood, companyLink,coordinates,contactPhone,descriptionSeo, garages,neighborhood,propertyId,rentPrice
+rentTotalPrice,rooms,stratum,title,whatsapp,propertyState,featured
+"""
+
+datos_importantes = caracteristicas['initialProps']['pageProps']['realEstate']
+datos_importantes['area']
+
+lista_interes = ['area', 'areac', 'areaUp', 'areaFrom', 'areaPrivada', 'bathrooms', 'builtTime', 'city', 'comment',
+               'commonNeighborhood', 'companyLink', 'coordinates', 'contactPhone', 'descriptionSeo', 'garages', 
+               'neighborhood', 'propertyId', 'rentPrice', 'rentTotalPrice', 'rooms', 'stratum', 'title', 
+               'whatsapp', 'propertyState', 'featured']
+
+
+
+diccionario_filtrado = dict(filter(lambda item: item[0] in lista_interes, datos_importantes.items()))
+
+
+lista_datos= []
+
+for i in lista_links:
+    
+    r = requests.get(i)
+    soup = BeautifulSoup(r.content)
+    elementos = soup.find_all(attrs={"id":"__NEXT_DATA__"})
+    
+    
+    contenido = elementos[0].contents[0]
+    datos_apto = json.loads(contenido)
+    
+    dic_impotantes=datos_apto['props']['initialProps']['pageProps']['realEstate']
+    
+    dic_filtrado = dict(filter(lambda item: item[0] in lista_interes, dic_impotantes.items()))
+    
+    lista_datos.append(dic_filtrado)
+    
+
+df_aptos = pd.DataFrame(lista_datos)
+
+df_aptos.columns
+
+df_aptos.to_pickle(r'C:\Users\hugos\OneDrive - Universidad de los andes\MECA\Semestre 1\Taller Python\Taller-de-Python-MECA\taller 3\datos_aptos.pickle')
+    
+df_aptos['builtTime']
+    
+
