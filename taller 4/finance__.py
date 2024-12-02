@@ -57,6 +57,7 @@ plt.ylabel('$', fontsize=12)
 
 # Titulo del gráfico con tamaño de letra 18
 plt.title('Evolución de 100$' , loc="center")
+plt.savefig('evol100.png', bbox_inches="tight")
 
 #
 plt.legend()
