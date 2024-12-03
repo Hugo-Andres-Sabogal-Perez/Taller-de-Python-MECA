@@ -11,14 +11,40 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
-Portafolio_inicial = {"AAPL":0.1, 
+portafolio = {"AAPL":0.1, 
                       "PFE" : 0.05, 
                       "JPM" : 0.2, 
                       'HD' :0.25, 
                       'XOM' : 0.25,
                       'TSLA' : 0.15}
 
-activos = list(Portafolio_inicial.keys())
+activos = list(portafolio)
+
+
+
+
+
+activos = list(portafolio.keys())
+pesos = list(portafolio.values())
+
+df_activos = yf.download(activos, start=fecha5y, end=fecha_analisis)
+df_activos['Close']= df_activos
+
+benchmark = yf.download('VOO', start=sfecha5y, end=fecha_analisis)
+benchmark = benchmark['Close']
+
+df_activos['portafolio'] = df_activos.dot(pesos)
+
+
+monto_inicial = 100
+evol_100 = pd.DataFrame((df_activos['portafolio'] / df_activos['portafolio'].iloc[0]) * monto_inicial)
+evol_100['Benchmark']  =  (benchmark['VOO'] / benchmark['VOO'].iloc[0]) * monto_inicial
+
+returns = evol_100.pct_change().dropna()
+
+dict_return  =  {'niveles 100': evol_100, 'retornos_diarios': returns }
+
+
 
 # Descargar datos de cierre ajustado (ajustado por splits y dividendos)
 acciones = yf.download(activos, start="2020-01-01", end="2023-12-01")
